@@ -49,12 +49,12 @@
         };
 
         let dataset2 = 
-            {
-              "name": "Mojojojo",
-              "deviceMake": "Indrakantha",
-              "model": "+94760000000",
-              "other_identifiers":"idk other details lol"
-        };
+          {
+              name: "Mojojojo",
+              deviceMake: "Indrakantha",
+              model: "+94760000000",
+              other_identifiers:"idk other details lol"
+          };
         /* *
         * The template's path must be passed as an arguement .
         * This path can be either a URL(as  in the commented line) or a path relative to the Public folder
@@ -69,10 +69,13 @@
             let zip = new JSZip(content);
             let doc = new docxtemplater().loadZip(zip)
             doc.setData(dataset2)
-            try {
-                doc.render()
-            }
-            catch (error) {
+            
+            doc.render(dataset2)
+            
+            // try {
+                // doc.render(dataset2)
+            // }
+            // catch (error) {
                 // let e = {
                 //     message: error.message,
                 //     name: error.name,
@@ -82,7 +85,8 @@
                 // console.log(JSON.stringify({error: e}));
                 // // The error thrown here contains additional information when logged with JSON.stringify (it contains a property object).
                 // throw error;
-            }
+            // }
+
             // docx generating
             let out = doc.getZip().generate({
                 type:"blob",
