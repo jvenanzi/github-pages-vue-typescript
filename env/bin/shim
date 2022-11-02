@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+export NODE_PATH='/Users/josephvenanzio/dev/github-pages/github-pages-vue-typescript-test/github-pages-vue-typescript/env/lib/node_modules'
+export NPM_CONFIG_PREFIX='/Users/josephvenanzio/dev/github-pages/github-pages-vue-typescript-test/github-pages-vue-typescript/env'
+export npm_config_prefix='/Users/josephvenanzio/dev/github-pages/github-pages-vue-typescript-test/github-pages-vue-typescript/env'
+exec 'env/bin/node' "$@"
