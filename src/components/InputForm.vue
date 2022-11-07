@@ -1,67 +1,78 @@
 <template>
   <form class="container" id="help-form">
-    <h1>Portal de Ayuda</h1>
+    <h1>Portal</h1>
     <h3>
-      Aqui podras ponerte en contacto con asesores de GAAP I.A.P para recibir
-      ayuda de manera digital.
+      Testing yo
     </h3>
     <div class="section">
-      <h2>Paso 1: Selecciona el tema de ayuda</h2>
+      <h2>Paso 1: Select Options</h2>
       <select id="seccion" name="seccion">
-        <option value=1>Ayuda con Nutricion</option>
-        <option value=2>Ayuda con Medicina</option>
-        <option value=3>Ayuda con Dental</option>
-        <option value=4>Ayuda con Rehabilitacion</option>
-        <option value=5>Ayuda con Tanatologia</option>
+        <option value=1>1 options</option>
+        <option value=2>2 options</option>
+        <option value=3>3 options</option>
+        <option value=4>4 options</option>
+        <option value=5>5 options</option>
       </select>
     </div>
 
     <div class="section">
-      <h2>Paso 2: Ingresa tu informacion de contacto</h2>
+      <h2>Paso 2: Contact Info</h2>
 
-      <label for="name" class="form-label">Nombre</label>
+      <label for="name" class="form-label">usrName</label>
       <input
         type="text"
         id="name"
         name="name"
         placeholder="Escribe tu nombre completo aqui"
+        v-model="usrName"
       />
 
-      <label for="mail" class="form-label">Correo Electronico</label>
+      <label for="mail" class="form-label">Email</label>
       <input
         type="mail"
         id="mail"
         name="name"
-        placeholder="ejemplo@correo.com"
+        placeholder="yo@gmail.com"
+        v-model="email"
       />
 
-      <label for="phone" class="form-label">Telefono</label>
+      <label for="phone" class="form-label">Phone</label>
       <input
         type="tel"
         id="phone"
         name="phone"
-        placeholder="10 digitos"
+        placeholder="10 digits"
+        v-model="phoneNumber"
       />
     </div>
     <div class="section">
-      <h2>Paso 3: Escribe en que necesitas ayuda</h2>
+      <h2>Paso 3: Help Aid</h2>
       <textarea
         name="message"
         id="message"
-        placeholder="Redacta aqui tu duda en 250 caracteres o menos"
+        placeholder="message"
+        v-model="otherIdentifiers"
       ></textarea>
     </div>
 
-    <div class="section">
-      <h2>Paso 4: Envia tu solicitud de ayuda</h2>
-      <input type="submit" name="submit" value="Enviar" />
+    <!-- <div class="section">
+      <p>Photos of the {deviceMake}, {model}, and {other_identifiers} are as follows: </p>
+      <input type="file" accept="image/*" @change="onChange"/>
     </div>
 
-    <p>
-      *Una vez enviada tu solicitud un asesor designado de GAAP se pondra en
-      contacto contigo a la brevedad para dar seguimiento.
-    </p>
+    <div class="section">
+      <p>Image Preview</p>
+      <div>
+        <img v-if="device_picture_url" :src="device_picture_url"/>
+      </div>
+    </div> -->
 
+    <div class="section">
+      <p>For the Device Make, Model, and Other Identifiers, between the dates of Start Date and End Date, 
+        the following digitally stored evidence related to the crime of Offense Type:  </p>
+    </div>
+
+    
     <div>
       <button @click="getDoc">Download Word Document</button>
     </div>
@@ -87,13 +98,17 @@
     data()
     {
       return{
-        usrName:'Steven',
-        deviceMake: 'Apple',
-        model:'AFSD234',
-        otherIdentifiers: "idk other details lol",
+        usrName:'',
+        deviceMake: '',
+        model:'',
+        otherIdentifiers: '',
         offenseType:'',
         endDate:'',
-        yourDepartment:''
+        yourDepartment:'',
+        phoneNumber:'',
+        email:'',
+        device_picture:'',
+        device_picture_url:''
       }
     },
 
@@ -107,6 +122,13 @@
           JSzipUtils.getBinaryContent(url,callback);
       },
 
+      onChange(e: any)
+      {
+        const file = e.target.files[0]
+        this.device_picture = file
+        this.device_picture_url = URL.createObjectURL(file)
+      },
+
       createAndSaveDocument(){
        
        let dataset = 
@@ -115,7 +137,7 @@
              deviceMake: this.deviceMake,
              model: this.model,
              other_identifiers: this.otherIdentifiers,
-             device_picture: '',
+             device_picture: this.device_picture,
              end_Date:'',
              your_Department: this.yourDepartment,
              offense_Type: this.offenseType,
@@ -162,7 +184,7 @@
                type:"blob",
                mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                })
-           saveAs(out,`MyDocument.docx`);    // You can pass this blob to a custom file saver component in the project.  
+           saveAs(out,`JoeDownloadProj.docx`);    // You can pass this blob to a custom file saver component in the project.  
        });
       },
 
