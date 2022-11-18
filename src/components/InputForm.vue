@@ -1,83 +1,84 @@
 <template>
-  <form class="container" id="help-form">
-    <h1>Portal</h1>
-    <h3>
-      Testing yo
-    </h3>
-    <div class="section">
-      <h2>Paso 1: Select Options</h2>
-      <select id="seccion" name="seccion">
-        <option value=1>1 options</option>
-        <option value=2>2 options</option>
-        <option value=3>3 options</option>
-        <option value=4>4 options</option>
-        <option value=5>5 options</option>
-      </select>
-    </div>
-
-    <div class="section">
-      <h2>Paso 2: Contact Info</h2>
-
-      <label for="name" class="form-label">usrName</label>
-      <input
-        type="text"
-        id="name"
-        name="name"
-        placeholder="Escribe tu nombre completo aqui"
-        v-model="usrName"
-      />
-
-      <label for="mail" class="form-label">Email</label>
-      <input
-        type="mail"
-        id="mail"
-        name="name"
-        placeholder="yo@gmail.com"
-        v-model="email"
-      />
-
-      <label for="phone" class="form-label">Phone</label>
-      <input
-        type="tel"
-        id="phone"
-        name="phone"
-        placeholder="10 digits"
-        v-model="phoneNumber"
-      />
-    </div>
-    <div class="section">
-      <h2>Paso 3: Help Aid</h2>
-      <textarea
-        name="message"
-        id="message"
-        placeholder="message"
-        v-model="otherIdentifiers"
-      ></textarea>
-    </div>
-
-    <!-- <div class="section">
-      <p>Photos of the {deviceMake}, {model}, and {other_identifiers} are as follows: </p>
-      <input type="file" accept="image/*" @change="onChange"/>
-    </div>
-
-    <div class="section">
-      <p>Image Preview</p>
-      <div>
-        <img v-if="device_picture_url" :src="device_picture_url"/>
-      </div>
-    </div> -->
-
-    <div class="section">
-      <p>For the Device Make, Model, and Other Identifiers, between the dates of Start Date and End Date, 
-        the following digitally stored evidence related to the crime of Offense Type:  </p>
-    </div>
-
-    
+  <div>
     <div>
-      <button @click="getDoc">Download Word Document</button>
-    </div>
-  </form>
+      <form class="container" id="help-form">
+        <h1>Portal</h1>
+        <h3>
+          Testing yo
+        </h3>
+        <div class="section">
+          <h2>Paso 1: Select Options</h2>
+          <select id="seccion" name="seccion">
+            <option value=1>1 options</option>
+            <option value=2>2 options</option>
+            <option value=3>3 options</option>
+            <option value=4>4 options</option>
+            <option value=5>5 options</option>
+          </select>
+        </div>
 
+        <div class="section">
+          <h3>Paso 2: Contact Info</h3>
+
+          <label for="name" class="form-label">Name: </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            v-model="docName"
+          /><br>
+
+          <label for="mail" class="form-label">Device Make: </label>
+          <input
+            type="mail"
+            id="mail"
+            name="name"
+            v-model="docDeviceMake"
+          /> <br>
+
+          <label for="phone" class="form-label">Device Model: </label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="10 digits"
+            v-model="docModel"
+          />
+        </div>
+        <br>
+        <label for="name" class="form-label">Other Identifiers: </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            v-model="docOtherIdentifiers"
+          />
+
+        <div class="section">
+          <p>Photos of the {deviceMake}, {model}, and {other_identifiers} are as follows: </p>
+          <input type="file" accept="image/*" @change="onChange"/>
+        </div>
+
+        <div class="section">
+          <p>Image Preview</p>
+          <div>
+            <img v-if="device_picture_url" :src="device_picture_url"/>
+          </div>
+        </div>
+
+        <div class="section">
+          <p>For the Device Make, Model, and Other Identifiers, between the dates of Start Date and End Date, 
+            the following digitally stored evidence related to the crime of Offense Type:  </p>
+        </div>
+
+      </form>
+    </div>
+    <div>
+      <div>
+          <button @click="getDoc">Download Word Document</button>
+        </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -106,10 +107,60 @@
         endDate:'',
         yourDepartment:'',
         phoneNumber:'',
-        email:'',
         device_picture:'',
-        device_picture_url:''
+        device_picture_url:'',
+        showButton:true,
       }
+    },
+    computed:
+    {
+      docName:
+      {
+        set(val){this.usrName = val;},
+        get(){return;},
+      },
+      
+      docDeviceMake:
+      {
+        set(val){this.deviceMake = val;},
+        get(){return;},
+      },
+
+      docModel:
+      {
+        set(val){this.model = val;},
+        get(){return;},
+      },
+
+      docOtherIdentifiers:
+      {
+        set(val){this.otherIdentifiers = val;},
+        get(){return;},
+      },
+
+      // docDevicePicture:
+      // {
+      //   set(val){this.usrName = val;},
+      //   get(){return;},
+      // },
+
+      docEndDate:
+      {
+        set(val){this.usrName = val;},
+        get(){return;},
+      },
+
+      docYourDepartment:
+      {
+        set(val){this.yourDepartment = val;},
+        get(){return;},
+      },
+
+      docOffenseType:
+      {
+        set(val){this.offenseType = val;},
+        get(){return;},
+      },
     },
 
     methods:
@@ -129,7 +180,8 @@
         this.device_picture_url = URL.createObjectURL(file)
       },
 
-      createAndSaveDocument(){
+      createAndSaveDocument()
+      {
        
        let dataset = 
          {
@@ -138,11 +190,15 @@
              model: this.model,
              other_identifiers: this.otherIdentifiers,
              device_picture: this.device_picture,
-             end_Date:'',
+             end_Date: this.endDate,
              your_Department: this.yourDepartment,
              offense_Type: this.offenseType,
 
          };
+
+         console.log('dataset: ',dataset)
+
+        
 
        /* *
        * The template's path must be passed as an arguement .
@@ -152,8 +208,9 @@
        * */
        // this.loadFile("https://docxtemplater.com/tag-example.docx",function(error: any,content : any){
 
-
-         this.loadFile('Word_Template/cellPhone_template_1.docx',function(error: any,content : any){
+        
+         this.loadFile('Word_Template/cellPhone_template_1.docx',function(error: any,content : any)
+         {
            if (error) { 
              throw error
            };
@@ -164,22 +221,22 @@
 
            doc.render(dataset)
            
-           // try {
-               // doc.render(dataset2)
-           // }
-           // catch (error) {
-               // let e = {
-               //     message: error.message,
-               //     name: error.name,
-               //     stack: error.stack,
-               //     properties: error.properties,
-               // }
-               // console.log(JSON.stringify({error: e}));
-               // // The error thrown here contains additional information when logged with JSON.stringify (it contains a property object).
-               // throw error;
-           // }
+          //  try {
+          //      doc.render(dataset)
+          //  }
+          //  catch (error: any) {
+          //      let e = {
+          //          message: error.message,
+          //          name: error.name,
+          //          stack: error.stack,
+          //          properties: error.properties,
+          //      }
+          //      console.log(JSON.stringify({error: e}));
+          //      // The error thrown here contains additional information when logged with JSON.stringify (it contains a property object).
+          //      throw error;
+          //  }
 
-           // docx generating
+          //  docx generating
            let out = doc.getZip().generate({
                type:"blob",
                mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
