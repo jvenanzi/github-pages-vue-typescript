@@ -59,12 +59,12 @@
           <input type="file" accept="image/*" @change="onChange"/>
         </div>
 
-        <div class="section">
+        <!-- <div class="section">
           <p>Image Preview</p>
           <div>
             <img v-if="device_picture_url" :src="device_picture_url"/>
           </div>
-        </div>
+        </div> -->
 
         <div class="section">
           <p>For the Device Make, Model, and Other Identifiers, between the dates of Start Date and End Date, 
@@ -74,6 +74,7 @@
       </form>
     </div>
     <div>
+      
       <div>
           <button @click="getDoc">Download Word Document</button>
         </div>
@@ -86,6 +87,7 @@
   import { Component, Prop, Vue } from "vue-property-decorator";
   import { defineComponent } from "vue";
   import docxtemplater from 'docxtemplater';
+  
 
   // import JSZip from 'jszip';
   const JSZip = require('jszip');
@@ -93,6 +95,9 @@
   const JSzipUtils = require('jszip-utils');
   // import  saveAs  from 'file-saver';
   const saveAs = require('file-saver');
+  const ImageModule = require('docxtemplater-image-module');
+  
+  
 
 
   export default defineComponent({
@@ -110,6 +115,7 @@
         device_picture:'',
         device_picture_url:'',
         showButton:true,
+        
       }
     },
     computed:
@@ -189,15 +195,20 @@
              deviceMake: this.deviceMake,
              model: this.model,
              other_identifiers: this.otherIdentifiers,
-             device_picture: this.device_picture,
+             device_picture: this.device_picture_url,
+            //  device_picture: 'https://docxtemplater.com/xt-pro-white.png',
              end_Date: this.endDate,
              your_Department: this.yourDepartment,
              offense_Type: this.offenseType,
 
          };
 
-         console.log('dataset: ',dataset)
 
+        //  const imageOpts = {
+        //   img: dataset.device_picture,
+        //   centered: false,
+        // }
+       
         
 
        /* *
@@ -211,12 +222,35 @@
         
          this.loadFile('Word_Template/cellPhone_template_1.docx',function(error: any,content : any)
          {
+              const imageOpts = {
+              centered: false,
+              getImage: function (tagValue: any, tagName: any) {
+                  return new Promise(function (
+                      resolve,
+                      reject
+                  ) 
+                  {
+                    new JSZip().getBinaryContent(
+                          tagValue,
+                          function (error: any, content: any) {
+                              if (error) {
+                                  return reject(error);
+                              }
+                              return resolve(content);
+                          }
+                      );
+                  });
+                }
+            }
+
            if (error) { 
              throw error
            };
 
            let zip = new JSZip(content);
            let doc = new docxtemplater().loadZip(zip)
+          // let doc = new docxtemplater().loadZip(zip).attachModule(new ImageModule(dataset.device_picture))
+           
            doc.setData(dataset)
 
            doc.render(dataset)
