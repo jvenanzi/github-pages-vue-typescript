@@ -254,21 +254,6 @@
            doc.setData(dataset)
 
            doc.render(dataset)
-           
-          //  try {
-          //      doc.render(dataset)
-          //  }
-          //  catch (error: any) {
-          //      let e = {
-          //          message: error.message,
-          //          name: error.name,
-          //          stack: error.stack,
-          //          properties: error.properties,
-          //      }
-          //      console.log(JSON.stringify({error: e}));
-          //      // The error thrown here contains additional information when logged with JSON.stringify (it contains a property object).
-          //      throw error;
-          //  }
 
           //  docx generating
            let out = doc.getZip().generate({
