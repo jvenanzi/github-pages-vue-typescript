@@ -220,7 +220,7 @@
        // this.loadFile("https://docxtemplater.com/tag-example.docx",function(error: any,content : any){
 
         
-         this.loadFile('/Word_Template/cellPhone_template_1.docx',function(error: any,content : any)
+         this.loadFile('public/Word_Template/cellPhone_template_ 1.docx',function(error: any,content : any)
          {
               const imageOpts = {
               centered: false,
