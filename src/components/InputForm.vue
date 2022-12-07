@@ -76,7 +76,7 @@
     <div>
       
       <div>
-          <button @click="getDoc">Download Word Document</button>
+          <button @click="getDoc">Download Word Documents</button>
         </div>
     </div>
   </div>
